@@ -99,6 +99,31 @@ ReactDOM.render(
 );
 ```
 
+## Translations object organization
+
+You are free to choose how you want to organize the translations.
+One possibility is the separation into features. You can nest the content as deep as you want.
+
+Arrays are possible as well.
+
+```js
+const translations = {
+  common: {
+    weekdays: ['sunday', 'monday', 'tuesday', 'wednesday']
+  }
+};
+```
+
+```
+const firstDayOfWeek = useTranslation('common.weekdays[0]');
+```
+
+## Note
+
+react-use-translation comes with a peer dependency of `get` and `curry` from `lodash`. The minimum required version is 3.7
+
+we want to keep the bundle size low by excluding these dependencies. This also avoids bundling duplicate dependencies as you probably have lodash in your node_modules anyway.
+
 ## License
 
-MIT © [ms007](https://github.com/ms007)
+with ❤ MIT © [ms007](https://github.com/ms007)
