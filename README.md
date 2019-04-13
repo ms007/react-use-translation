@@ -114,8 +114,33 @@ const translations = {
 };
 ```
 
-```
+```js
 const firstDayOfWeek = useTranslation('common.weekdays[0]');
+```
+
+## Templating
+
+You can use placeholders within translations. They work and look exactly the same as placeholders in ES 6 template strings with the only difference that translations are enclosed by double or single quotes instead of the back-tick (``) used by ES 6 template strings.
+
+A translation string could thus be written as follows:
+
+```js
+const translations = {
+  greeting: "Hello ${name}! You're looking ${adjective} today!"
+};
+```
+
+Pass the values as second parameter to the useTranslation hook:
+
+```js
+const values = {
+  name: 'Melanie',
+  adjective: 'awesome'
+};
+
+const greeting = useTranslation('greeting', values);
+
+// Hello Melanie! You're looking awesome today!
 ```
 
 ## Note

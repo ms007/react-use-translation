@@ -1,6 +1,6 @@
 {
   "name": "react-use-translation",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "description": "Hooks enabled internationalization for react",
   "author": "ms007",
   "license": "MIT",
@@ -15,7 +15,8 @@
   "keywords": [
     "react",
     "translations",
-    "i18n"
+    "i18n",
+    "hooks"
   ],
   "scripts": {
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
