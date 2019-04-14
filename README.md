@@ -143,6 +143,66 @@ const greeting = useTranslation('greeting', values);
 // Hello Melanie! You're looking awesome today!
 ```
 
+## Update translations
+
+You can either perform the update in a controlled way by passing the new translations to the `TranslationsProvider`, or by using the builtin hook `useUpdateTranslation`, which can be used in any functional component down in the deeply nested tree of the child components of `TranslationsProvider`.
+
+In the following example the hook is used
+
+```jsx
+import React from 'react';
+import { useUpdateTranslation } from 'react-use-translation';
+
+const translations = {
+  language: 'german',
+  common: {
+    weekdays: {
+      monday: 'Montag',
+      tuesday: 'Dienstag'
+    }
+  }
+};
+
+const LanguageSwitch = () => {
+  const switchLanguage = useUpdateTranslation();
+  const onClick = () => switchLanguage(translations);
+  return <button onClick={onClick}>Switch language</button>;
+};
+
+export default LanguageSwitch;
+```
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { TranslationsProvider } from 'react-use-translation';
+
+import LanguageSwitch from './LanguageSwitch';
+
+const initialTranslations = {
+  language: 'portuguese',
+  common: {
+    weekdays: {
+      monday: 'segunda-feira',
+      tuesday: 'terça-feira'
+    }
+  }
+};
+
+ReactDOM.render(
+  <TranslationsProvider translations={initialTranslations}>
+    <LanguageSwitch />
+  </TranslationsProvider>,
+  document.getElementById('root')
+);
+```
+
+By default the `TranslationsProvider` stores a copy of the previous translations to determine if the internal state needs to be updated when new props are passed to it.
+
+To minimize memory consumption, add a property with the name `language` to the translations. Then, during an update, this property is used to compare whether the derived state needs to be updated.
+
+Have a look at the code example above for how to set the language.
+
 ## Note
 
 react-use-translation comes with a peer dependency of `get` and `curry` from `lodash`. The minimum required version is 3.7

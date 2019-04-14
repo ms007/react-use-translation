@@ -1,5 +1,5 @@
 import Translate from './Translate'
 import TranslationsProvider from './TranslationsProvider'
-import { useTranslation, withTranslation } from './translate'
+import { useTranslation, withTranslation, useUpdateTranslation } from './translation'
 
-export { useTranslation, withTranslation, TranslationsProvider, Translate }
+export { useTranslation, withTranslation, useUpdateTranslation, TranslationsProvider, Translate }
