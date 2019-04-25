@@ -1,6 +1,6 @@
 /* eslint-disable no-new-func */
 
-import React, { useContext } from 'react'
+import React, { useContext, useCallback } from 'react'
 import get from 'lodash/get'
 import curry from 'lodash/curry'
 
@@ -15,7 +15,7 @@ const template = (text, values) => {
   return fn(...Object.values(values))
 }
 
-const translate = curry((translations, path, values) => {
+const translatePath = curry((translations, path, values) => {
   if (!translations) {
     throw new Error('No translations provided')
   }
@@ -32,7 +32,10 @@ export const withTranslation = Component => {
   const enhancedComponent = props => {
     const { translations } = useContext(TranslationsContext)
     return (
-      <Component {...props} translate={(path, values) => translate(translations, path, values)} />
+      <Component
+        {...props}
+        translate={(path, values) => translatePath(translations, path, values)}
+      />
     )
   }
 
@@ -41,9 +44,13 @@ export const withTranslation = Component => {
   return enhancedComponent
 }
 
-export const useTranslation = (path, values) => {
+export const useTranslation = () => {
   const { translations } = useContext(TranslationsContext)
-  return translate(translations, path, values)
+  const translate = useCallback((path, values) => translatePath(translations, path, values), [
+    translations
+  ])
+
+  return translate
 }
 
 export const useUpdateTranslation = () => {
