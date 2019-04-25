@@ -3,8 +3,8 @@ import React from 'react'
 import useTranslation from './translation'
 
 const Translate = ({ path }) => {
-  const translate = useTranslation()
-  return <React.Fragment>{translate(path)}</React.Fragment>
+  const text = useTranslation(path)
+  return <React.Fragment>{text}</React.Fragment>
 }
 
 export default Translate
