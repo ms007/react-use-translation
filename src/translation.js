@@ -1,6 +1,6 @@
 /* eslint-disable no-new-func */
 
-import React, { useContext, useMemo } from 'react'
+import React, { useContext } from 'react'
 import get from 'lodash/get'
 import curry from 'lodash/curry'
 
@@ -43,12 +43,7 @@ export const withTranslation = Component => {
 
 export const useTranslation = (path, values) => {
   const { translations } = useContext(TranslationsContext)
-  const memoizedText = useMemo(() => translate(translations, path, values), [
-    translations,
-    path,
-    values
-  ])
-  return memoizedText
+  return translate(translations, path, values)
 }
 
 export const useUpdateTranslation = () => {
