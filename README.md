@@ -205,9 +205,9 @@ Have a look at the code example above for how to set the language.
 
 ## Note
 
-react-use-translation comes with a peer dependency of `get` and `curry` from `lodash`. The minimum required version is 3.7
+react-use-translation comes with a peer dependency of `get`, `curry` and `template` from `lodash`. The minimum required version is 3.7.
 
-we want to keep the bundle size low by excluding these dependencies. This also avoids bundling duplicate dependencies as you probably have lodash in your node_modules anyway.
+We want to keep the bundle size low by excluding these dependencies. This also avoids bundling duplicate dependencies as you probably have lodash in your node_modules anyway.
 
 ## License
 
