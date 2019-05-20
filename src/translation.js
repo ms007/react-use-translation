@@ -3,19 +3,14 @@
 import React, { useContext } from 'react'
 import get from 'lodash/get'
 import curry from 'lodash/curry'
+import template from 'lodash/template'
 
 import { TranslationsContext } from './TranslationsProvider'
 
 const expression = /\${.+?}/
 const isTemplated = text => expression.test(text)
 
-const template = (text, values) => {
-  const keys = Object.keys(values)
-  var fn = new Function(...keys, 'return `' + text + '`;')
-  return fn(...Object.values(values))
-}
-
-const translate = curry((translations, path, values) => {
+export const translate = curry((translations, path, values) => {
   if (!translations) {
     throw new Error('No translations provided')
   }
@@ -25,7 +20,7 @@ const translate = curry((translations, path, values) => {
     return text
   }
 
-  return template(text, values)
+  return template(text)(values)
 })
 
 export const withTranslation = Component => {
