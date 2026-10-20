@@ -4,7 +4,10 @@
   "description": "Hooks enabled internationalization for react",
   "author": "ms007",
   "license": "MIT",
-  "repository": "ms007/react-use-translation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ms007/react-use-translation.git"
+  },
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
