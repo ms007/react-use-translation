@@ -1,12 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import React from 'react'
 import TranslationsProvider from './TranslationsProvider'
-import {
-  translate,
-  useTranslation,
-  useUpdateTranslation,
-  withTranslation
-} from './translation'
+import { translate, useTranslation, useUpdateTranslation, withTranslation } from './translation'
 import { render, act } from './test-utils'
 
 const translations = {
@@ -21,9 +16,7 @@ describe('translate', () => {
   })
 
   it('translates with template string', () => {
-    expect(translate(translations, 'greeting', { name: 'Larry' })).toBe(
-      'Hello Larry!'
-    )
+    expect(translate(translations, 'greeting', { name: 'Larry' })).toBe('Hello Larry!')
   })
 
   it('resolves nested paths', () => {
@@ -36,30 +29,20 @@ describe('translate', () => {
 
   it('returns templated text unchanged without values', () => {
     expect(translate(translations, 'greeting', null)).toBe('Hello ${name}!')
-    expect(translate(translations, 'greeting', undefined)).toBe(
-      'Hello ${name}!'
-    )
+    expect(translate(translations, 'greeting', undefined)).toBe('Hello ${name}!')
   })
 
   it('ignores values for plain text', () => {
-    expect(translate(translations, 'title', { name: 'Larry' })).toBe(
-      'Hello world!'
-    )
+    expect(translate(translations, 'title', { name: 'Larry' })).toBe('Hello world!')
   })
 
   it('throws without translations', () => {
-    expect(() => translate(undefined, 'title', null)).toThrow(
-      'No translations provided'
-    )
-    expect(() => translate(null, 'title', null)).toThrow(
-      'No translations provided'
-    )
+    expect(() => translate(undefined, 'title', null)).toThrow('No translations provided')
+    expect(() => translate(null, 'title', null)).toThrow('No translations provided')
   })
 
   it('is curried', () => {
-    expect(translate(translations)('greeting')({ name: 'Larry' })).toBe(
-      'Hello Larry!'
-    )
+    expect(translate(translations)('greeting')({ name: 'Larry' })).toBe('Hello Larry!')
     expect(translate(translations, 'title')(null)).toBe('Hello world!')
   })
 })
@@ -78,9 +61,7 @@ describe('useTranslation', () => {
 
   it('throws outside of a provider', () => {
     const error = vi.spyOn(console, 'error').mockImplementation(() => {})
-    expect(() => render(<Text path="title" />)).toThrow(
-      'No translations provided'
-    )
+    expect(() => render(<Text path="title" />)).toThrow('No translations provided')
     error.mockRestore()
   })
 })

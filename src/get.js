@@ -1,5 +1,6 @@
 // Mirrors lodash/get, including bracket notation and quoted keys
-const rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g
+const rePropName =
+  /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g
 const reEscapeChar = /\\(\\)?/g
 const reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/
 const reIsPlainProp = /^\w*$/
@@ -9,12 +10,7 @@ const isKey = (value, object) => {
     return false
   }
   const type = typeof value
-  if (
-    type === 'number' ||
-    type === 'symbol' ||
-    type === 'boolean' ||
-    value == null
-  ) {
+  if (type === 'number' || type === 'symbol' || type === 'boolean' || value == null) {
     return true
   }
   return (
@@ -30,9 +26,7 @@ const stringToPath = string => {
     result.push('')
   }
   string.replace(rePropName, (match, number, quote, subString) => {
-    result.push(
-      quote ? subString.replace(reEscapeChar, '$1') : number || match
-    )
+    result.push(quote ? subString.replace(reEscapeChar, '$1') : number || match)
   })
   return result
 }

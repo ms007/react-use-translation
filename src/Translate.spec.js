@@ -21,9 +21,7 @@ it('renders the translation as plain text', () => {
 })
 
 it('uses the remaining props as template values', () => {
-  expect(renderTranslate({ path: 'greeting', name: 'Larry' })).toBe(
-    'Hello Larry!'
-  )
+  expect(renderTranslate({ path: 'greeting', name: 'Larry' })).toBe('Hello Larry!')
 })
 
 it('renders the path for missing translations', () => {

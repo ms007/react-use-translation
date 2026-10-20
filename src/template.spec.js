@@ -10,12 +10,8 @@ it('interpolates values', () => {
 })
 
 it('evaluates expressions', () => {
-  expect(render('${count} day${count > 1 ? "s" : ""}', { count: 1 })).toBe(
-    '1 day'
-  )
-  expect(render('${count} day${count > 1 ? "s" : ""}', { count: 3 })).toBe(
-    '3 days'
-  )
+  expect(render('${count} day${count > 1 ? "s" : ""}', { count: 1 })).toBe('1 day')
+  expect(render('${count} day${count > 1 ? "s" : ""}', { count: 3 })).toBe('3 days')
   expect(render('${name.toUpperCase()}', { name: 'larry' })).toBe('LARRY')
   expect(
     render('${list.map(i => i.name).join(", ")}', {
@@ -49,18 +45,12 @@ describe('failing placeholders', () => {
   })
 
   it('renders the other placeholders', () => {
-    expect(render('${missingValue}, ${count} new', { count: 3 })).toBe(
-      '${missingValue}, 3 new'
-    )
+    expect(render('${missingValue}, ${count} new', { count: 3 })).toBe('${missingValue}, 3 new')
   })
 
   it('keeps placeholders that throw', () => {
-    expect(render('${user.name.toUpperCase()}!', { user: {} })).toBe(
-      '${user.name.toUpperCase()}!'
-    )
-    expect(render("${'it\\'s ' + missingValue}", {})).toBe(
-      "${'it\\'s ' + missingValue}"
-    )
+    expect(render('${user.name.toUpperCase()}!', { user: {} })).toBe('${user.name.toUpperCase()}!')
+    expect(render("${'it\\'s ' + missingValue}", {})).toBe("${'it\\'s ' + missingValue}")
   })
 
   it('warns for each failing placeholder', () => {
@@ -71,9 +61,7 @@ describe('failing placeholders', () => {
   })
 
   it('keeps the whole text for invalid expressions', () => {
-    expect(render('${1 +} and ${count}', { count: 1 })).toBe(
-      '${1 +} and ${count}'
-    )
+    expect(render('${1 +} and ${count}', { count: 1 })).toBe('${1 +} and ${count}')
     expect(warn.mock.calls[0][1]).toBeInstanceOf(SyntaxError)
   })
 
@@ -99,9 +87,7 @@ it('drops empty placeholders', () => {
 
 it('leaves lodash delimiters untouched', () => {
   expect(render('<%= name %> ${name}', { name: 'x' })).toBe('<%= name %> x')
-  expect(render('<% if (true) { %>x<% } %>', {})).toBe(
-    '<% if (true) { %>x<% } %>'
-  )
+  expect(render('<% if (true) { %>x<% } %>', {})).toBe('<% if (true) { %>x<% } %>')
   expect(render('<%- html %>', { html: '<b>' })).toBe('<%- html %>')
 })
 

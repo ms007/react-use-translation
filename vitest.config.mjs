@@ -9,15 +9,15 @@ const jsxInJs = {
     if (!/\/src\/.*\.js$/.test(id)) return
     return transformWithOxc(code, id, {
       lang: 'jsx',
-      jsx: { runtime: 'classic' },
+      jsx: { runtime: 'classic' }
     })
-  },
+  }
 }
 
 export default defineConfig({
   plugins: [jsxInJs],
   test: {
     environment: 'jsdom',
-    globals: true,
-  },
+    globals: true
+  }
 })

@@ -33,6 +33,7 @@ const compile = text => {
     source += "__p += '" + escapeString(text.slice(index, offset)) + "';\n"
     if (expression) {
       const placeholder = escapeString(match)
+      // prettier-ignore
       source +=
         'try {\n__t = (' + expression + ");\n__p += __t == null ? '' : __t;\n" +
         "} catch (e) {\n__w('could not evaluate " + placeholder + "', e);\n" +

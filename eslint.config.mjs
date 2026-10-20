@@ -4,21 +4,19 @@ import globals from 'globals'
 
 export default [
   { ignores: ['dist/'] },
-  ...neostandard(),
+  ...neostandard({ noStyle: true }),
   reactHooks.configs.flat.recommended,
   {
     languageOptions: {
-      parserOptions: { ecmaFeatures: { jsx: true } },
+      parserOptions: { ecmaFeatures: { jsx: true } }
     },
     rules: {
       // classic JSX runtime needs React in scope
-      'no-unused-vars': ['error', { varsIgnorePattern: '^React$' }],
-      // don't force a space before function parens
-      '@stylistic/space-before-function-paren': 'off',
-    },
+      'no-unused-vars': ['error', { varsIgnorePattern: '^React$' }]
+    }
   },
   {
     files: ['**/*.spec.js', 'src/test-utils.js'],
-    languageOptions: { globals: globals.vitest },
-  },
+    languageOptions: { globals: globals.vitest }
+  }
 ]

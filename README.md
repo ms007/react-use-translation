@@ -30,9 +30,9 @@ modules](https://webpack.js.org/api/module-methods/#commonjs).
 ### **With hooks**
 
 ```jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { TranslationsProvider, useTranslation } from 'react-use-translation';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { TranslationsProvider, useTranslation } from 'react-use-translation'
 
 const translations = {
   country: '🇨🇭',
@@ -42,44 +42,44 @@ const translations = {
       tuesday: 'Dienstag'
     }
   }
-};
+}
 
 const MyComponent = () => {
-  const monday = useTranslation('common.weekdays.monday');
-  return <h1> {monday} </h1>;
-};
+  const monday = useTranslation('common.weekdays.monday')
+  return <h1> {monday} </h1>
+}
 
 ReactDOM.render(
   <TranslationsProvider translations={translations}>
     <MyComponent />
   </TranslationsProvider>,
   document.getElementById('root')
-);
+)
 ```
 
 ### **With HOC**
 
 ```jsx
-import React, { Component } from 'react';
-import { withTranslation } from 'react-use-translation';
+import React, { Component } from 'react'
+import { withTranslation } from 'react-use-translation'
 
 class MyComponent extends Component {
   render() {
-    const { translate } = this.props;
-    const monday = translate('common.weekdays.monday');
-    return <h1>{monday}</h1>;
+    const { translate } = this.props
+    const monday = translate('common.weekdays.monday')
+    return <h1>{monday}</h1>
   }
 }
 
-export default withTranslation(MyComponent);
+export default withTranslation(MyComponent)
 ```
 
 ```jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { TranslationsProvider } from 'react-use-translation';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { TranslationsProvider } from 'react-use-translation'
 
-import MyComponent from './MyComponent';
+import MyComponent from './MyComponent'
 
 const translations = {
   country: '🇧🇷',
@@ -89,14 +89,14 @@ const translations = {
       tuesday: 'terça-feira'
     }
   }
-};
+}
 
 ReactDOM.render(
   <TranslationsProvider translations={translations}>
     <MyComponent />
   </TranslationsProvider>,
   document.getElementById('root')
-);
+)
 ```
 
 ## Translations object organization
@@ -111,11 +111,11 @@ const translations = {
   common: {
     weekdays: ['sunday', 'monday', 'tuesday', 'wednesday']
   }
-};
+}
 ```
 
 ```js
-const firstDayOfWeek = useTranslation('common.weekdays[0]');
+const firstDayOfWeek = useTranslation('common.weekdays[0]')
 ```
 
 ## Templating
@@ -127,7 +127,7 @@ A translation string could thus be written as follows:
 ```js
 const translations = {
   greeting: "Hello ${name}! You're looking ${adjective} today!"
-};
+}
 ```
 
 Pass the values as second parameter to the useTranslation hook:
@@ -136,9 +136,9 @@ Pass the values as second parameter to the useTranslation hook:
 const values = {
   name: 'Melanie',
   adjective: 'awesome'
-};
+}
 
-const greeting = useTranslation('greeting', values);
+const greeting = useTranslation('greeting', values)
 
 // Hello Melanie! You're looking awesome today!
 ```
@@ -149,12 +149,12 @@ Placeholders accept any JavaScript expression, just like in template strings. Th
 const translations = {
   inbox: "You have ${count} new message${count === 1 ? '' : 's'}",
   author: 'Written by ${user.name.toUpperCase()}'
-};
+}
 
-useTranslation('inbox', { count: 3 });
+useTranslation('inbox', { count: 3 })
 // You have 3 new messages
 
-useTranslation('author', { user: { name: 'Melanie' } });
+useTranslation('author', { user: { name: 'Melanie' } })
 // Written by MELANIE
 ```
 
@@ -181,8 +181,8 @@ You can either perform the update in a controlled way by passing the new transla
 In the following example the hook is used
 
 ```jsx
-import React from 'react';
-import { useUpdateTranslation } from 'react-use-translation';
+import React from 'react'
+import { useUpdateTranslation } from 'react-use-translation'
 
 const translations = {
   language: 'german',
@@ -192,23 +192,23 @@ const translations = {
       tuesday: 'Dienstag'
     }
   }
-};
+}
 
 const LanguageSwitch = () => {
-  const switchLanguage = useUpdateTranslation();
-  const onClick = () => switchLanguage(translations);
-  return <button onClick={onClick}>Switch language</button>;
-};
+  const switchLanguage = useUpdateTranslation()
+  const onClick = () => switchLanguage(translations)
+  return <button onClick={onClick}>Switch language</button>
+}
 
-export default LanguageSwitch;
+export default LanguageSwitch
 ```
 
 ```jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { TranslationsProvider } from 'react-use-translation';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { TranslationsProvider } from 'react-use-translation'
 
-import LanguageSwitch from './LanguageSwitch';
+import LanguageSwitch from './LanguageSwitch'
 
 const initialTranslations = {
   language: 'portuguese',
@@ -218,14 +218,14 @@ const initialTranslations = {
       tuesday: 'terça-feira'
     }
   }
-};
+}
 
 ReactDOM.render(
   <TranslationsProvider translations={initialTranslations}>
     <LanguageSwitch />
   </TranslationsProvider>,
   document.getElementById('root')
-);
+)
 ```
 
 By default the `TranslationsProvider` stores a copy of the previous translations to determine if the internal state needs to be updated when new props are passed to it.
