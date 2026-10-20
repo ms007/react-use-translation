@@ -4,35 +4,25 @@
 
 > Hooks enabled internationalization for react
 
-[![NPM](https://img.shields.io/npm/v/react-use-translation.svg)](https://www.npmjs.com/package/react-use-translation) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-use-translation.svg)](https://www.npmjs.com/package/react-use-translation)
 
-# Installation
-
-react-use-translation requires **React 16.8.4 or later.**
+## Installation
 
 ```bash
-$ npm install --save react-use-translation
+npm install react-use-translation
 ```
 
-or
+The package ships ES modules, CommonJS and TypeScript types, so it works with any bundler and with Node.js.
 
-```bash
-$ yarn add react-use-translation
-```
+## Usage
 
-This assumes that you’re using [npm](http://npmjs.com/) package manager
-with a module bundler like [Webpack](https://webpack.js.org/) or
-[Browserify](http://browserify.org/) to consume [CommonJS
-modules](https://webpack.js.org/api/module-methods/#commonjs).
-
-# Usage
-
-### **With hooks**
+Wrap your app in a `TranslationsProvider` and pass it the translations.
 
 ```jsx
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { TranslationsProvider, useTranslation } from 'react-use-translation'
+import { createRoot } from 'react-dom/client'
+import { TranslationsProvider } from 'react-use-translation'
+
+import App from './App'
 
 const translations = {
   country: '🇨🇭',
@@ -44,42 +34,47 @@ const translations = {
   }
 }
 
-const MyComponent = () => {
-  const monday = useTranslation('common.weekdays.monday')
-  return <h1> {monday} </h1>
-}
-
-ReactDOM.render(
+createRoot(document.getElementById('root')).render(
   <TranslationsProvider translations={translations}>
-    <MyComponent />
-  </TranslationsProvider>,
-  document.getElementById('root')
+    <App />
+  </TranslationsProvider>
 )
 ```
 
-### **With HOC**
+Inside the provider there are three ways to read a translation.
+
+### With the hook
 
 ```jsx
-import React, { Component } from 'react'
-import { withTranslation } from 'react-use-translation'
+import { useTranslation } from 'react-use-translation'
 
-class MyComponent extends Component {
-  render() {
-    const { translate } = this.props
-    const monday = translate('common.weekdays.monday')
-    return <h1>{monday}</h1>
-  }
+const Monday = () => {
+  const monday = useTranslation('common.weekdays.monday')
+  return <h1>{monday}</h1>
 }
+```
 
-export default withTranslation(MyComponent)
+### With the component
+
+`Translate` renders the translation as text. Props other than `path` are passed as [template values](#templating).
+
+```jsx
+import { Translate } from 'react-use-translation'
+
+const Monday = () => (
+  <h1>
+    <Translate path="common.weekdays.monday" />
+  </h1>
+)
+
+export default Monday
 ```
 
 ```jsx
-import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { TranslationsProvider } from 'react-use-translation'
 
-import MyComponent from './MyComponent'
+import Monday from './Monday'
 
 const translations = {
   country: '🇧🇷',
@@ -91,20 +86,43 @@ const translations = {
   }
 }
 
-ReactDOM.render(
+createRoot(document.getElementById('root')).render(
   <TranslationsProvider translations={translations}>
-    <MyComponent />
-  </TranslationsProvider>,
-  document.getElementById('root')
+    <Monday />
+  </TranslationsProvider>
 )
 ```
 
-## Translations object organization
+### With the HOC
 
-You are free to choose how you want to organize the translations.
-One possibility is the separation into features. You can nest the content as deep as you want.
+`withTranslation` passes a `translate` function as a prop, which is useful for class components.
 
-Arrays are possible as well.
+```jsx
+import { Component } from 'react'
+import { withTranslation } from 'react-use-translation'
+
+class Monday extends Component {
+  render() {
+    return <h1>{this.props.translate('common.weekdays.monday')}</h1>
+  }
+}
+
+export default withTranslation(Monday)
+```
+
+In TypeScript, type the props with `WithTranslationProps`:
+
+```tsx
+import { withTranslation, type WithTranslationProps } from 'react-use-translation'
+
+class Monday extends Component<WithTranslationProps> {
+  // ...
+}
+```
+
+## Organizing translations
+
+You are free to organize the translations as you like, for example by feature, and nest them as deep as you want. Arrays work as well:
 
 ```js
 const translations = {
@@ -112,17 +130,16 @@ const translations = {
     weekdays: ['sunday', 'monday', 'tuesday', 'wednesday']
   }
 }
+
+useTranslation('common.weekdays[0]')
+// sunday
 ```
 
-```js
-const firstDayOfWeek = useTranslation('common.weekdays[0]')
-```
+If a path does not exist, the path itself is returned. A missing translation shows up as `common.weekdays.friday` in the UI instead of rendering nothing.
 
 ## Templating
 
-You can use placeholders within translations. They work and look exactly the same as placeholders in ES 6 template strings with the only difference that translations are enclosed by double or single quotes instead of the back-tick (``) used by ES 6 template strings.
-
-A translation string could thus be written as follows:
+Translations can contain placeholders. They look like placeholders in template literals, but the translation is a plain string in single or double quotes:
 
 ```js
 const translations = {
@@ -130,20 +147,16 @@ const translations = {
 }
 ```
 
-Pass the values as second parameter to the useTranslation hook:
+Pass the values as second argument to `useTranslation` or to `translate` from the HOC. `Translate` takes them as props.
 
-```js
-const values = {
-  name: 'Melanie',
-  adjective: 'awesome'
-}
-
-const greeting = useTranslation('greeting', values)
-
+```jsx
+useTranslation('greeting', { name: 'Melanie', adjective: 'awesome' })
 // Hello Melanie! You're looking awesome today!
+
+<Translate path="greeting" name="Melanie" adjective="awesome" />
 ```
 
-Placeholders accept any JavaScript expression, just like in template strings. The values are in scope as variables.
+Placeholders accept any JavaScript expression, just like in template literals. The values are in scope as variables.
 
 ```js
 const translations = {
@@ -167,6 +180,7 @@ useTranslation('author', { user: { name: 'Melanie' } })
 - A translation with invalid syntax, such as `${1 +}`, is returned unchanged.
 - Names that exist as browser globals, such as `name` or `status`, never count as missing. A missing `name` resolves to `window.name`, usually an empty string.
 - Only `${...}` is supported. The lodash delimiters `<%= %>`, `<%- %>` and `<% %>` stay as plain text.
+- `Translate` uses the `path` prop itself, so a placeholder named `${path}` cannot get a value through `Translate`. Use `useTranslation` instead.
 
 ### Security
 
@@ -176,14 +190,11 @@ If your Content Security Policy does not allow `'unsafe-eval'`, the browser bloc
 
 ## Update translations
 
-You can either perform the update in a controlled way by passing the new translations to the `TranslationsProvider`, or by using the builtin hook `useUpdateTranslation`, which can be used in any functional component down in the deeply nested tree of the child components of `TranslationsProvider`.
+There are two ways to change the translations at runtime. Either pass new translations to the `TranslationsProvider`, or call the function returned by `useUpdateTranslation` from any component inside the provider. Called outside of a `TranslationsProvider`, `useUpdateTranslation` throws an error.
 
-Called outside of a `TranslationsProvider`, `useUpdateTranslation` throws an error.
-
-In the following example the hook is used
+The update replaces all translations, it does not merge them.
 
 ```jsx
-import React from 'react'
 import { useUpdateTranslation } from 'react-use-translation'
 
 const translations = {
@@ -197,17 +208,15 @@ const translations = {
 }
 
 const LanguageSwitch = () => {
-  const switchLanguage = useUpdateTranslation()
-  const onClick = () => switchLanguage(translations)
-  return <button onClick={onClick}>Switch language</button>
+  const updateTranslations = useUpdateTranslation()
+  return <button onClick={() => updateTranslations(translations)}>Deutsch</button>
 }
 
 export default LanguageSwitch
 ```
 
 ```jsx
-import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { TranslationsProvider } from 'react-use-translation'
 
 import LanguageSwitch from './LanguageSwitch'
@@ -222,19 +231,78 @@ const initialTranslations = {
   }
 }
 
-ReactDOM.render(
+createRoot(document.getElementById('root')).render(
   <TranslationsProvider translations={initialTranslations}>
     <LanguageSwitch />
-  </TranslationsProvider>,
-  document.getElementById('root')
+  </TranslationsProvider>
 )
 ```
 
-By default the `TranslationsProvider` stores a copy of the previous translations to determine if the internal state needs to be updated when new props are passed to it.
+### Loading a language on demand
 
-To minimize memory consumption, add a property with the name `language` to the translations. Then, during an update, this property is used to compare whether the derived state needs to be updated.
+Keep each language in its own file and load it only when the user switches. Bundlers like Vite and webpack split every file matched by the dynamic `import()` into its own chunk.
 
-Have a look at the code example above for how to set the language.
+```json
+// translations/de.json
+{
+  "language": "german",
+  "common": {
+    "weekdays": {
+      "monday": "Montag",
+      "tuesday": "Dienstag"
+    }
+  }
+}
+```
+
+```jsx
+import { useState } from 'react'
+import { useUpdateTranslation } from 'react-use-translation'
+
+const LanguageSwitch = () => {
+  const updateTranslations = useUpdateTranslation()
+  const [loading, setLoading] = useState(false)
+
+  const switchTo = async language => {
+    setLoading(true)
+    try {
+      const { default: translations } = await import(`./translations/${language}.json`)
+      updateTranslations(translations)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <>
+      <button disabled={loading} onClick={() => switchTo('de')}>
+        Deutsch
+      </button>
+      <button disabled={loading} onClick={() => switchTo('pt')}>
+        Português
+      </button>
+    </>
+  )
+}
+```
+
+### The `language` field
+
+Add a `language` field to every translations object. The provider compares it with the previous `translations` prop:
+
+- Same language: the provider keeps its current translations, including those set through `useUpdateTranslation`.
+- Different language: the provider switches to the new prop.
+- No `language` field: every new object counts as a different language. An inline object like `translations={{ ... }}` then undoes updates on each re-render of the parent.
+
+## TypeScript
+
+The package ships its own type declarations. Besides the components and hooks it exports these types:
+
+- `Translations`: the translations object passed to `TranslationsProvider`
+- `TranslationValues`: the values for placeholders
+- `TranslateProps`: the props of `Translate`
+- `TranslationsProviderProps`: the props of `TranslationsProvider`
+- `WithTranslationProps`: the props `withTranslation` passes to the wrapped component
 
 ## License
 
