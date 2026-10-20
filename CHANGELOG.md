@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.1 (2026-10-20)
+
+### Changed
+
+- New package description: "Tiny hooks-based i18n for React. Zero dependencies, plain JSON translations, about 2 kB gzipped."
+- The README shows the bundle size and links to a runnable example on StackBlitz.
+- Added a Vite example app in `examples/vite`.
+
 ## 2.0.0 (2026-10-20)
 
 ### Breaking changes
