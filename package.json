@@ -1,7 +1,7 @@
 {
   "name": "react-use-translation",
   "version": "2.0.0",
-  "description": "Hooks enabled internationalization for react",
+  "description": "Tiny hooks-based i18n for React. Zero dependencies, plain JSON translations, about 2 kB gzipped.",
   "author": "ms007",
   "license": "MIT",
   "repository": {

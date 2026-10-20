@@ -2,9 +2,12 @@
 
 # react-use-translation
 
-> Hooks enabled internationalization for react
+> Tiny hooks-based i18n for React. Zero dependencies, plain JSON translations, about 2 kB gzipped.
 
 [![NPM](https://img.shields.io/npm/v/react-use-translation.svg)](https://www.npmjs.com/package/react-use-translation)
+[![Bundle size](https://img.shields.io/bundlephobia/minzip/react-use-translation)](https://bundlephobia.com/package/react-use-translation)
+
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/ms007/react-use-translation/tree/main/examples/vite)
 
 ## Installation
 
