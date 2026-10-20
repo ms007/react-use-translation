@@ -28,7 +28,7 @@ it('resolves bracket notation', () => {
   expect(get(object, 'list.1.name')).toBe('y')
   expect(get(object, 'list[1]["name"]')).toBe('y')
   expect(get(object, 'a["b.c"]')).toBe('dotted')
-  expect(get(object, `["q'k"].v`)).toBe(1)
+  expect(get(object, '["q\'k"].v')).toBe(1)
 })
 
 it('returns undefined for missing paths', () => {

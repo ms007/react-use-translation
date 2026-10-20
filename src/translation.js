@@ -22,16 +22,16 @@ export const translate = curry((translations, path, values) => {
 })
 
 export const withTranslation = Component => {
-  const enhancedComponent = props => {
+  const EnhancedComponent = props => {
     const { translations } = useContext(TranslationsContext)
     return (
       <Component {...props} translate={(path, values) => translate(translations, path, values)} />
     )
   }
 
-  enhancedComponent.displayName = `withTranslation(${Component.displayName || Component.name})`
-  enhancedComponent.WrappedComponent = Component
-  return enhancedComponent
+  EnhancedComponent.displayName = `withTranslation(${Component.displayName || Component.name})`
+  EnhancedComponent.WrappedComponent = Component
+  return EnhancedComponent
 }
 
 export const useTranslation = (path, values) => {

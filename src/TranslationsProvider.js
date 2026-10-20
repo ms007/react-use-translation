@@ -12,7 +12,7 @@ class TranslationsProvider extends Component {
     const translationsChanged = translations !== prev && language !== prev
     if (prev == null || translationsChanged) {
       return {
-        translations: translations,
+        translations,
         prev: language || translations
       }
     }
