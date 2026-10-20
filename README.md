@@ -179,7 +179,6 @@ useTranslation('author', { user: { name: 'Melanie' } })
 - A placeholder that cannot be evaluated, for example because a value is missing, stays in the output as is: `Hello ${name}`. The other placeholders still render. Outside of production builds, a warning appears in the console.
 - A translation with invalid syntax, such as `${1 +}`, is returned unchanged.
 - Names that exist as browser globals, such as `name` or `status`, never count as missing. A missing `name` resolves to `window.name`, usually an empty string.
-- Only `${...}` is supported. The lodash delimiters `<%= %>`, `<%- %>` and `<% %>` stay as plain text.
 - `Translate` uses the `path` prop itself, so a placeholder named `${path}` cannot get a value through `Translate`. Use `useTranslation` instead.
 
 ### Security
