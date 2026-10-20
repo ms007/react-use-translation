@@ -78,7 +78,7 @@ describe('useUpdateTranslation', () => {
   it('replaces the translations of the provider', () => {
     let update: (translations: Translations) => void = () => {}
     const Updater = () => {
-      update = useUpdateTranslation()!
+      update = useUpdateTranslation()
       return useTranslation('title')
     }
 
@@ -93,6 +93,18 @@ describe('useUpdateTranslation', () => {
       update({ title: 'Hallo Welt!' })
     })
     expect(container.textContent).toBe('Hallo Welt!')
+  })
+
+  it('throws outside of a provider', () => {
+    const Updater = () => {
+      useUpdateTranslation()
+      return null
+    }
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {})
+    expect(() => render(<Updater />)).toThrow(
+      'useUpdateTranslation must be used within a TranslationsProvider'
+    )
+    error.mockRestore()
   })
 })
 

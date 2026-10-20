@@ -62,8 +62,11 @@ export const useTranslation = (path: string, values?: Values): string => {
   return translate(translations, path, values)
 }
 
-export const useUpdateTranslation = () => {
+export const useUpdateTranslation = (): ((translations: Translations) => void) => {
   const { updateTranslations } = useContext(TranslationsContext)
+  if (!updateTranslations) {
+    throw new Error('useUpdateTranslation must be used within a TranslationsProvider')
+  }
   return updateTranslations
 }
 

@@ -178,6 +178,8 @@ If your Content Security Policy does not allow `'unsafe-eval'`, the browser bloc
 
 You can either perform the update in a controlled way by passing the new translations to the `TranslationsProvider`, or by using the builtin hook `useUpdateTranslation`, which can be used in any functional component down in the deeply nested tree of the child components of `TranslationsProvider`.
 
+Called outside of a `TranslationsProvider`, `useUpdateTranslation` throws an error.
+
 In the following example the hook is used
 
 ```jsx

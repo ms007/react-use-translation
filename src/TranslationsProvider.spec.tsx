@@ -7,7 +7,7 @@ let update: (translations: Translations) => void
 const Title = () => {
   const updateTranslations = useUpdateTranslation()
   useEffect(() => {
-    update = updateTranslations!
+    update = updateTranslations
   })
   return useTranslation('title')
 }
