@@ -2,7 +2,7 @@
 
 // Based on lodash/template for ES delimiters (${...}) only.
 // Compiles to string concatenation instead of a native template literal,
-// which older engines like IE11 cannot parse.
+// so each placeholder can run in its own try/catch.
 // Unlike lodash, a placeholder that fails to evaluate stays in the output as is.
 const reEsTemplate = /\$\{([^\\}]*(?:\\.[^\\}]*)*)\}/g
 const reUnescapedString = /['\n\r\u2028\u2029\\]/g
