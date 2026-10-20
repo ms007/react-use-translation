@@ -1,9 +1,7 @@
-/* eslint-disable no-new-func */
-
 import React, { useContext } from 'react'
-import get from 'lodash/get'
-import curry from 'lodash/curry'
-import template from 'lodash/template'
+import get from './get'
+import curry from './curry'
+import template from './template'
 
 import { TranslationsContext } from './TranslationsProvider'
 
