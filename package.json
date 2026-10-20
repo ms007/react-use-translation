@@ -32,8 +32,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "react": ">=16.8.4",
-    "react-dom": ">=16.8.4"
+    "react": ">=16.8.0"
   },
   "devDependencies": {
     "@types/react": "19.3.0",
