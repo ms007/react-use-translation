@@ -33,6 +33,23 @@ it('provides an empty object without translations prop', () => {
   expect(container.textContent).toBe('title')
 })
 
+it('keeps updated translations without translations prop', () => {
+  const { container, rerender } = render(
+    <TranslationsProvider>
+      <Title />
+    </TranslationsProvider>
+  )
+  act(() => {
+    update({ title: 'Updated' })
+  })
+  rerender(
+    <TranslationsProvider>
+      <Title />
+    </TranslationsProvider>
+  )
+  expect(container.textContent).toBe('Updated')
+})
+
 describe('without language', () => {
   it('replaces translations when the object changes', () => {
     const { container, rerender } = renderProvider({ title: 'Hello' })

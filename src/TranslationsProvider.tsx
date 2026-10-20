@@ -1,4 +1,4 @@
-import React, { Component, type ReactElement, type ReactNode } from 'react'
+import React, { useCallback, useMemo, useState, type ReactElement, type ReactNode } from 'react'
 
 export interface Translations {
   language?: string
@@ -17,43 +17,42 @@ export interface TranslationsProviderProps {
   children?: ReactNode
 }
 
-interface TranslationsProviderState {
-  translations?: Translations
-  prev?: string | Translations
+interface TranslationsState {
+  translations: Translations
+  // language of the translations prop, or the prop itself without a language
+  prev: string | Translations
 }
 
-class TranslationsProvider extends Component<TranslationsProviderProps, TranslationsProviderState> {
-  state: TranslationsProviderState = {}
+// Stable default, a new object per render would reset the state on every render
+const noTranslations: Translations = {}
 
-  static getDerivedStateFromProps(
-    nextProps: TranslationsProviderProps,
-    prevState: TranslationsProviderState
-  ): TranslationsProviderState | null {
-    const { translations = {} } = nextProps
-    const { prev } = prevState
-    const { language } = translations
-    const translationsChanged = translations !== prev && language !== prev
-    if (prev == null || translationsChanged) {
-      return {
-        translations,
-        prev: language || translations
-      }
-    }
+const fromProp = (translations: Translations): TranslationsState => ({
+  translations,
+  prev: translations.language || translations
+})
 
-    return null
+const TranslationsProvider = ({
+  translations = noTranslations,
+  children
+}: TranslationsProviderProps): ReactElement => {
+  const [state, setState] = useState(() => fromProp(translations))
+
+  // Adopt the prop only when its language changes, or its identity without a language,
+  // so translations set through updateTranslations survive unrelated re-renders
+  const { language } = translations
+  if (translations !== state.prev && language !== state.prev) {
+    setState(fromProp(translations))
   }
 
-  update = (translations: Translations) => {
-    this.setState({ ...this.state, translations })
-  }
+  const updateTranslations = useCallback((next: Translations) => {
+    setState(current => ({ ...current, translations: next }))
+  }, [])
 
-  render(): ReactElement {
-    const { children } = this.props
-    const { translations } = this.state
-
-    const value = { translations, updateTranslations: this.update }
-    return <TranslationsContext.Provider value={value}>{children}</TranslationsContext.Provider>
-  }
+  const value = useMemo(
+    () => ({ translations: state.translations, updateTranslations }),
+    [state.translations, updateTranslations]
+  )
+  return <TranslationsContext.Provider value={value}>{children}</TranslationsContext.Provider>
 }
 
 export default TranslationsProvider
