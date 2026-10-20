@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": ["es2020", "dom"],
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "jsx": "react",
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true,
+    "types": ["vitest/globals"]
+  },
+  "include": ["src", "*.config.ts"]
+}

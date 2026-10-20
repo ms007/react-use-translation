@@ -4,19 +4,17 @@ import globals from 'globals'
 
 export default [
   { ignores: ['dist/'] },
-  ...neostandard({ noStyle: true }),
+  ...neostandard({ ts: true, noStyle: true }),
   reactHooks.configs.flat.recommended,
   {
-    languageOptions: {
-      parserOptions: { ecmaFeatures: { jsx: true } }
-    },
+    files: ['**/*.{ts,tsx}'],
     rules: {
       // classic JSX runtime needs React in scope
-      'no-unused-vars': ['error', { varsIgnorePattern: '^React$' }]
+      '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^React$' }]
     }
   },
   {
-    files: ['**/*.spec.js', 'src/test-utils.js'],
+    files: ['src/*.spec.{ts,tsx}', 'src/test-utils.ts'],
     languageOptions: { globals: globals.vitest }
   }
 ]

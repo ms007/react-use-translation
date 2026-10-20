@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 import React from 'react'
-import Translate from './Translate'
+import Translate, { type TranslateProps } from './Translate'
 import TranslationsProvider from './TranslationsProvider'
 import { render } from './test-utils'
 
@@ -9,7 +9,7 @@ const translations = {
   greeting: 'Hello ${name}!'
 }
 
-const renderTranslate = props =>
+const renderTranslate = (props: TranslateProps) =>
   render(
     <TranslationsProvider translations={translations}>
       <Translate {...props} />

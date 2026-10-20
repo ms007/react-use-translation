@@ -1,10 +1,18 @@
 // Mirrors lodash/curry, including placeholder support
+// Typed loosely; callers describe the curried signature themselves
 const placeholder = {}
 
-const curry = (fn, arity = fn.length) => {
-  const wrap = collected => {
-    const curried = function (...args) {
-      const merged = []
+type AnyFunction = (...args: any[]) => any
+
+export interface Curried {
+  (...args: any[]): any
+  placeholder: typeof placeholder
+}
+
+const curry = (fn: AnyFunction, arity: number = fn.length): Curried => {
+  const wrap = (collected: unknown[]): Curried => {
+    const curried = function (this: unknown, ...args: unknown[]) {
+      const merged: unknown[] = []
       let i = 0
       for (let j = 0; j < collected.length; j++) {
         const arg = collected[j]

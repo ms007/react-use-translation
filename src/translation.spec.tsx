@@ -1,7 +1,14 @@
 /* eslint-disable no-template-curly-in-string */
 import React from 'react'
-import TranslationsProvider from './TranslationsProvider'
-import { translate, useTranslation, useUpdateTranslation, withTranslation } from './translation'
+import TranslationsProvider, { type Translations } from './TranslationsProvider'
+import {
+  translate,
+  useTranslation,
+  useUpdateTranslation,
+  withTranslation,
+  type TranslationValues,
+  type WithTranslationProps
+} from './translation'
 import { render, act } from './test-utils'
 
 const translations = {
@@ -48,7 +55,8 @@ describe('translate', () => {
 })
 
 describe('useTranslation', () => {
-  const Text = ({ path, values }) => useTranslation(path, values)
+  const Text = ({ path, values }: { path: string; values?: TranslationValues }) =>
+    useTranslation(path, values)
 
   it('translates from the provider', () => {
     const { container } = render(
@@ -68,9 +76,9 @@ describe('useTranslation', () => {
 
 describe('useUpdateTranslation', () => {
   it('replaces the translations of the provider', () => {
-    let update
+    let update: (translations: Translations) => void = () => {}
     const Updater = () => {
-      update = useUpdateTranslation()
+      update = useUpdateTranslation()!
       return useTranslation('title')
     }
 
@@ -89,7 +97,7 @@ describe('useUpdateTranslation', () => {
 })
 
 describe('withTranslation', () => {
-  function Greeting({ translate, name }) {
+  function Greeting({ translate, name }: WithTranslationProps & { name: string }) {
     return translate('greeting', { name })
   }
   const Enhanced = withTranslation(Greeting)

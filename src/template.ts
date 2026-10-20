@@ -7,7 +7,10 @@
 const reEsTemplate = /\$\{([^\\}]*(?:\\.[^\\}]*)*)\}/g
 const reUnescapedString = /['\n\r\u2028\u2029\\]/g
 
-const stringEscapes = {
+// Avoids a dependency on @types/node for the NODE_ENV check
+declare const process: { env: { NODE_ENV?: string } }
+
+const stringEscapes: Record<string, string> = {
   '\\': '\\',
   "'": "'",
   '\n': 'n',
@@ -16,20 +19,22 @@ const stringEscapes = {
   '\u2029': 'u2029'
 }
 
-const escapeStringChar = chr => '\\' + stringEscapes[chr]
-const escapeString = string => string.replace(reUnescapedString, escapeStringChar)
+const escapeStringChar = (chr: string) => '\\' + stringEscapes[chr]
+const escapeString = (string: string) => string.replace(reUnescapedString, escapeStringChar)
 
-const warn = (message, error) => {
+const warn = (message: string, error: unknown) => {
   if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'production') {
     console.warn(`react-use-translation: ${message}`, error)
   }
 }
 
-const compile = text => {
+export type Compiled = (values?: object | null) => string
+
+const compile = (text: string): Compiled => {
   let index = 0
   let source = ''
 
-  text.replace(reEsTemplate, (match, expression, offset) => {
+  text.replace(reEsTemplate, (match, expression: string, offset: number) => {
     source += "__p += '" + escapeString(text.slice(index, offset)) + "';\n"
     if (expression) {
       const placeholder = escapeString(match)
@@ -52,9 +57,9 @@ const compile = text => {
   )(warn)
 }
 
-const cache = new Map()
+const cache = new Map<string, Compiled>()
 
-const template = text => {
+const template = (text: unknown): Compiled => {
   const string = text == null ? '' : String(text)
   let compiled = cache.get(string)
   if (!compiled) {

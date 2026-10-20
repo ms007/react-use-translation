@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react'
-import TranslationsProvider from './TranslationsProvider'
+import TranslationsProvider, { type Translations } from './TranslationsProvider'
 import { useTranslation, useUpdateTranslation } from './translation'
 import { render, act } from './test-utils'
 
-let update
+let update: (translations: Translations) => void
 const Title = () => {
   const updateTranslations = useUpdateTranslation()
   useEffect(() => {
-    update = updateTranslations
+    update = updateTranslations!
   })
   return useTranslation('title')
 }
 
-const renderProvider = translations =>
+const renderProvider = (translations: Translations) =>
   render(
     <TranslationsProvider translations={translations}>
       <Title />

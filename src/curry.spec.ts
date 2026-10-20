@@ -1,6 +1,6 @@
 import curry from './curry'
 
-const fn = curry(function (a, b, c, ...rest) {
+const fn = curry(function (this: { x?: unknown } | undefined, a, b, c, ...rest) {
   return [a, b, c, rest, this && this.x]
 })
 const _ = fn.placeholder

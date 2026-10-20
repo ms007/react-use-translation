@@ -1,7 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import template from './template'
 
-const render = (text, values) => template(text)(values)
+const render = (text: unknown, values?: object | null) => template(text)(values)
 
 it('interpolates values', () => {
   expect(render('Hello ${name}!', { name: 'Larry' })).toBe('Hello Larry!')
@@ -29,7 +29,7 @@ it('renders null and undefined as empty string', () => {
 })
 
 describe('failing placeholders', () => {
-  let warn
+  let warn: ReturnType<typeof vi.spyOn>
 
   beforeEach(() => {
     warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
