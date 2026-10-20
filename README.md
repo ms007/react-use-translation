@@ -135,7 +135,7 @@ useTranslation('common.weekdays[0]')
 // sunday
 ```
 
-If a path does not exist, the path itself is returned. A missing translation shows up as `common.weekdays.friday` in the UI instead of rendering nothing.
+If a path does not exist, the path itself is returned. A missing translation shows up as `common.weekdays.friday` in the UI instead of rendering nothing. The same applies to paths that point to anything other than a string, such as `common.weekdays`. An empty string is a valid translation and renders nothing.
 
 ## Templating
 

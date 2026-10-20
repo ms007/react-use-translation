@@ -28,7 +28,8 @@ export const translate: CurriedTranslate = curry(
       throw new Error('No translations provided')
     }
 
-    const text = (get(translations, path) as string | undefined) || path
+    const value = get(translations, path)
+    const text = typeof value === 'string' ? value : path
     if (!values || !isTemplated(text)) {
       return text
     }

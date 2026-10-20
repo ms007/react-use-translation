@@ -34,6 +34,18 @@ describe('translate', () => {
     expect(translate(translations, 'missing.path', null)).toBe('missing.path')
   })
 
+  it('falls back to the path for values that are not strings', () => {
+    const mixed = { nested: { label: 'Nested' }, list: ['a'], zero: 0, count: 5 }
+    expect(translate(mixed, 'nested', null)).toBe('nested')
+    expect(translate(mixed, 'list', null)).toBe('list')
+    expect(translate(mixed, 'zero', null)).toBe('zero')
+    expect(translate(mixed, 'count', null)).toBe('count')
+  })
+
+  it('returns an empty string translation as is', () => {
+    expect(translate({ suffix: '' }, 'suffix', null)).toBe('')
+  })
+
   it('returns templated text unchanged without values', () => {
     expect(translate(translations, 'greeting', null)).toBe('Hello ${name}!')
     expect(translate(translations, 'greeting', undefined)).toBe('Hello ${name}!')
