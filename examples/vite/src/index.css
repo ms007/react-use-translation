@@ -1,0 +1,122 @@
+:root {
+  --text: #3f3a46;
+  --text-h: #08060d;
+  --bg: #fff;
+  --card-bg: #f7f6f9;
+  --border: #e5e4e7;
+  --accent: #7a1fd1;
+  --accent-text: #fff;
+
+  font: 17px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #c4c7ce;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --card-bg: #1f2028;
+    --border: #2e303a;
+    --accent: #c084fc;
+    --accent-text: #16171d;
+  }
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+h1,
+h2 {
+  color: var(--text-h);
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+h1 {
+  font-size: 2.2rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+
+p {
+  margin: 0 0 12px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.language-switch,
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+button {
+  font: inherit;
+  color: var(--text-h);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.weekdays {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.weekdays li {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 12px;
+}
+
+footer {
+  text-align: center;
+}

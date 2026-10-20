@@ -1,0 +1,23 @@
+{
+  "language": "fr",
+  "app": {
+    "title": "Application multilingue",
+    "intro": "Cette page montre toutes les façons dont react-use-translation fournit du texte."
+  },
+  "languageSwitch": {
+    "label": "Langue",
+    "loading": "Chargement de la langue..."
+  },
+  "greeting": "Bonjour ${user} ! Ravi de te voir.",
+  "inbox": {
+    "title": "Boîte de réception",
+    "count": "Tu as ${count} nouveau${count === 1 ? '' : 'x'} message${count === 1 ? '' : 's'}",
+    "add": "Ajouter un message",
+    "clear": "Vider"
+  },
+  "weekdays": {
+    "title": "Jours de la semaine",
+    "days": ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
+  },
+  "footer": "Rendu par un composant de classe avec withTranslation."
+}
